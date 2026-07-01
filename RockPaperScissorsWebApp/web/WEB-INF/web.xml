@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <servlet>
+        <servlet-name>StartSessionServlet</servlet-name>
+        <servlet-class>za.ac.tut.web.StartSessionServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetSiriSignServlet</servlet-name>
+        <servlet-class>za.ac.tut.web.GetSiriSignServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetPlayerSignServlet</servlet-name>
+        <servlet-class>za.ac.tut.web.GetPlayerSignServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PersistStatisticsServlet</servlet-name>
+        <servlet-class>za.ac.tut.web.PersistStatisticsServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewAllStatisticsServlet</servlet-name>
+        <servlet-class>za.ac.tut.web.ViewAllStatisticsServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetSpecificStatisticServlet</servlet-name>
+        <servlet-class>za.ac.tut.web.GetSpecificStatisticServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewWonStatisticsServlet</servlet-name>
+        <servlet-class>za.ac.tut.web.ViewWonStatisticsServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EndSessionServlet</servlet-name>
+        <servlet-class>za.ac.tut.web.EndSessionServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StartSessionServlet</servlet-name>
+        <url-pattern>/StartSessionServlet.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetSiriSignServlet</servlet-name>
+        <url-pattern>/GetSiriSignServlet.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetPlayerSignServlet</servlet-name>
+        <url-pattern>/GetPlayerSignServlet.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PersistStatisticsServlet</servlet-name>
+        <url-pattern>/PersistStatisticsServlet.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewAllStatisticsServlet</servlet-name>
+        <url-pattern>/ViewAllStatisticsServlet.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetSpecificStatisticServlet</servlet-name>
+        <url-pattern>/GetSpecificStatisticServlet.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewWonStatisticsServlet</servlet-name>
+        <url-pattern>/ViewWonStatisticsServlet.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EndSessionServlet</servlet-name>
+        <url-pattern>/EndSessionServlet.do</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    <context-param>
+        <param-name>comp_name</param-name>
+        <param-value>Siri</param-value>
+    </context-param>
+    <security-constraint>
+        <display-name>PlayerConstraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>PlayerResources</web-resource-name>
+            <description>Resources available to the player.</description>
+            <url-pattern>/play_with_siri.jsp</url-pattern>
+            <url-pattern>/GetSiriSignServlet.do</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>Authenticate player.</description>
+            <role-name>Player</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>OwnerConstraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>OwnerResources</web-resource-name>
+            <description>Resources available to the owner.</description>
+            <url-pattern>/view_specific_statistics.jsp</url-pattern>
+            <url-pattern>/GetSpecificStatisticServlet.do</url-pattern>
+            <url-pattern>/ViewAllStatisticsServlet.do</url-pattern>
+            <url-pattern>/ViewWonStatisticsServlet.do</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>Authenticate owner.</description>
+            <role-name>Owner </role-name>
+        </auth-constraint>
+    </security-constraint>
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>file</realm-name>
+        <form-login-config>
+            <form-login-page>/login.jsp</form-login-page>
+            <form-error-page>/login_error.jsp</form-error-page>
+        </form-login-config>
+    </login-config>
+    <security-role>
+        <description>This is the player role.</description>
+        <role-name>Player</role-name>
+    </security-role>
+    <security-role>
+        <description>This is the owner role.</description>
+        <role-name>Owner </role-name>
+    </security-role>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/unauthorise_error.jsp</location>
+    </error-page>
+</web-app>
